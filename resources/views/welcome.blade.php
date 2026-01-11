@@ -77,16 +77,21 @@
                     </div>
                     <div class="pillar-body">
                         <div class="kpi-section">
-                            <h4><i class="fas fa-chart-line"></i> KPIs</h4>
+                            <p>Outcome : Bawat Bata Natututo</p>
+                            <p>Lag Measure : Proficiency Level</p>
+                            <h4><i class="fas fa-check"></i>ICARE</h4>
+                            <small>Lead Measures</small>
                             <ul class="kpi-list">
-                                <li>Proficiency Levels (% of Proficient/Nearly Proficient Learners)
-                                    <ul>
-                                        <li>Learning Areas (LOA)</li>
-                                        <li>Literacy (Reading)</li>
-                                        <li>Numeracy</li>
-                                    </ul>
-                                </li>
-                                <li>Socio-Emotional Learning (% of Learners covered)</li>
+                                <li>Proficiency Level (All Learning Areas)</li>
+                                <li>Completion Rate (Formal & Non-Formal)</li>
+                                <li>Percentage of NC Passers</li>
+                                <li>Percentage of A&E Passers</li>
+                            </ul>
+                            <h4><i class="fas fa-check"></i>SINULID</h4>
+                            <small>Lead Measures</small>
+                            <ul class="kpi-list">
+                                <li>Reading at the Right Level</li>
+                                <li>Numerate at the Right Level</li>
                             </ul>
                         </div>
                         <div class="projects-section">
@@ -104,23 +109,27 @@
                     <div class="pillar-header">
                         <h3><i class="fas fa-hands-helping"></i> B. Agapay</h3>
                         <div class="pillar-description">
-                            Access, Equity, Inclusion, Well-being and Resilience
+                            Access, Equity, and Inclusion
                         </div>
                     </div>
                     <div class="pillar-body">
                         <div class="kpi-section">
-                            <h4><i class="fas fa-chart-line"></i> KPIs</h4>
+                            <p>Outcome : Walang Batang Maiiwan</p>
+                            <p>Lag Measure : Access Rate</p>
+                            <h4><i class="fas fa-check"></i>SAGIP</h4>
+                            <small>Lead Measures</small>
                             <ul class="kpi-list">
-                                <li>Out-of-School Children, Youth, and Adults (Ratio of Mapped and Enrolled)</li>
-                                <li>Participation (Enrollment)</li>
-                                <li>Dropout (Rate/Percentage)</li>
-                                <li>Inclusion (ADM/FLO Enrollment)
-                                    <ul>
-                                        <li>SNED</li>
-                                        <li>ALIVE</li>
-                                        <li>ALS</li>
-                                    </ul>
-                                </li>
+                                <li>Participation Rate (NER & GER)</li>
+                                <li>Percentage of Out-of-School Children and Youth </li>
+                                <li>Dropout Rate</li>
+                            </ul>
+                            <h4><i class="fas fa-check"></i>LINGAP</h4>
+                            <small>Lead Measures</small>
+                            <ul class="kpi-list">
+                                <li>Inclusion Rate (ALS)</li>
+                                <li>Inclusion Rate (SNED)</li>
+                                <li>Inclusion Rate (ALIVE)</li>
+                                <li>Inclusion Rate (FLP)</li>
                             </ul>
                         </div>
                         <div class="projects-section">
@@ -144,14 +153,13 @@
                     </div>
                     <div class="pillar-body">
                         <div class="kpi-section">
-                            <h4><i class="fas fa-chart-line"></i> KPIs</h4>
+                            <p>Outcome : Bayanihan para sa Paaralan</p>
+                            <p>Lag Measure : Partnership Impact</p>
+                            <h4><i class="fas fa-check"></i>ISSHED</h4>
+                            <small>Lead Measures</small>
                             <ul class="kpi-list">
-                                <li>Partnerships (Number and Revenue)
-                                    <ul>
-                                        <li>New (Current Year)</li>
-                                        <li>Sustained</li>
-                                    </ul>
-                                </li>
+                                <li>Number of New Partners</li>
+                                <li>Number of Sustained Partners</li>
                             </ul>
                         </div>
                         <div class="projects-section">
@@ -175,10 +183,24 @@
                     </div>
                     <div class="pillar-body">
                         <div class="kpi-section">
-                            <h4><i class="fas fa-chart-line"></i> KPIs</h4>
+                            <p>Outcome : Makabagong Pamamahala</p>
+                            <p>Lag Measure : Good E-Governance Compliance</p>
+                            <h4><i class="fas fa-check"></i>UX</h4>
+                            <small>Lead Measures</small>
                             <ul class="kpi-list">
-                                <li>Systems Development</li>
-                                <li>Research, Continuous Improvement and Innovation</li>
+                                <li>Number of Functional Service-Systems Developed</li>
+                            </ul>
+                            <h4><i class="fas fa-check"></i>SALIKSIK</h4>
+                            <small>Lead Measures</small>
+                            <ul class="kpi-list">
+                                <li>Number of Research and Innovations Developed</li>
+                                <li>Number of Research and Innovations Utilized</li>
+                            </ul>
+                            <h4><i class="fas fa-check"></i>QMS/EOMS</h4>
+                            <small>Lead Measures</small>
+                            <ul class="kpi-list">
+                                <li>Acquired/Sustained Certification</li>
+                                <li>Rate of Compliance to AO 25 and Agency Accountabilities</li>
                             </ul>
                         </div>
                         <div class="projects-section">
@@ -203,17 +225,29 @@
                     <div class="pillar-header">
                         <h3><i class="fas fa-heartbeat"></i> E. Numbalik</h3>
                         <div class="pillar-description">
-                            Learning Recovery, Well-being and Safe and Inclusive Environment
+                            Learning Recovery, Well-being, Safety and Inclusive Environment
                         </div>
                     </div>
                     <div class="pillar-body">
                         <div class="kpi-section">
-                            <h4><i class="fas fa-chart-line"></i> KPIs</h4>
+                            <p>Outcome : Alaga at Ligtas na Mag-aaral</p>
+                            <p>Lag Measure : Learners Welfare</p>
+                            <h4><i class="fas fa-check"></i>OK sa DepEd Gentri</h4>
+                            <small>Lead Measures</small>
                             <ul class="kpi-list">
-                                <li>Health (% of Learners)</li>
-                                <li>Rights and Protection (% of Learners)</li>
-                                <li>Safety (% of Safe Schools)</li>
-                                <li>Infrastructure Development (Classroom to Student Ratio/Class Size)</li>
+                                <li>Percentage of Healthy Learners</li>
+                            </ul>
+                            <h4><i class="fas fa-check"></i>SECURE-PUSO</h4>
+                            <small>Lead Measures</small>
+                            <ul class="kpi-list">
+                                <li>Percentage of Learner’s Protected Rights</li>
+                                <li>Number of Youth Formation Programs Implemented</li>
+                            </ul>
+                            <h4><i class="fas fa-check"></i>DRRM-SAFE</h4>
+                            <small>Lead Measures</small>
+                            <ul class="kpi-list">
+                                <li>Percentage of Safe Schools</li>
+                                <li>Percentage of Schools meeting the standard class size</li>
                             </ul>
                         </div>
                         <div class="projects-section">
@@ -243,9 +277,16 @@
                     </div>
                     <div class="pillar-body">
                         <div class="kpi-section">
-                            <h4><i class="fas fa-chart-line"></i> KPIs</h4>
+                            <p>Outcome : Mabuti at Mahusay na Kawani</p>
+                            <p>Lag Measure : IIP/PRIME-HRM Recognition</p>
+                            <h4><i class="fas fa-check"></i>HUMANE</h4>
+                            <small>Lead Measures</small>
                             <ul class="kpi-list">
-                                <li>PRIME-HRM Level (Gold, Silver)</li>
+                                <li>Percentage of Filled Items</li>
+                                <li>Percentage of Personnel with L&D</li>
+                                <li>Percentage of Personnel Benefits Received </li>
+                                <li>Percentage of Performance Managed</li>
+                                <li>Percentage of Personnel Recognized</li>
                             </ul>
                         </div>
                         <div class="projects-section">
