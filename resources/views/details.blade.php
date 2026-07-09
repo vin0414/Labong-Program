@@ -87,9 +87,9 @@
                 <a href="{{ route('/') }}" style="text-decoration: none;"><span id="back-to-projects">LABONG
                         Program</span></a>
                 <i class="fas fa-chevron-right"></i>
-                <span id="current-project"><?=$project['category']?></span>
+                <span id="current-project">{{ $project['category'] }}</span>
                 <i class="fas fa-chevron-right"></i>
-                <span id="current-activity"><?=$project['name']?></span>
+                <span id="current-activity">{{ $project['name'] }}</span>
             </div>
             @if(session('success'))
             <div class="alert alert-success">
@@ -104,7 +104,7 @@
             <div class="activity-details">
                 <div class="section-title">
                     <i class="fas fa-tasks"></i>
-                    <h2>Activity: <span id="activity-name"><?=$project['name']?></span></h2>
+                    <h2>Activity: <span id="activity-name">{{ $project['name'] }}</span></h2>
                 </div>
                 @if(!empty(session()->get('user')) && session()->get('role')==="Super-admin")
                 <div style="display:flex;gap:5px;margin-bottom:10px;">
@@ -118,19 +118,19 @@
                 </div>
                 @endif
                 <h2 style="margin-bottom: 10px;">Description: <span
-                        id="activity-name"><?=$project['description']?></span></h2>
+                        id="activity-name">{{ $project['description'] }}</span></h2>
                 <div class="activity-info-grid">
                     <div class="info-card">
                         <h3>Amount Allocated</h3>
-                        <p>₱<span id="allocated-amount"><?=number_format($project['budget_amount'],2)?></span></p>
+                        <p>₱<span id="allocated-amount">{{ number_format($project['budget_amount'],2) }}</span></p>
                     </div>
                     <div class="info-card">
                         <h3>Amount Utilized</h3>
-                        <p>₱<span id="utilized-amount"><?=number_format($project['amount_spent'],2)?></span></p>
+                        <p>₱<span id="utilized-amount">{{ number_format($project['amount_spent'],2) }}</span></p>
                     </div>
                     <div class="info-card">
                         <h3>Target Date</h3>
-                        <p><span id="target-date"><?=date('F d, Y',strtotime($project['implementation_date']))?></span>
+                        <p><span id="target-date">{{ date('F d, Y',strtotime($project['implementation_date'])) }}</span>
                         </p>
                     </div>
                     <div class="info-card">
@@ -141,21 +141,22 @@
                     </div>
                     <div class="info-card">
                         <h3>Budget Source</h3>
-                        <p><span id="allocated-amount"><?=$project['budget_source']?></span></p>
+                        <p><span id="allocated-amount">{{ $project['budget_source'] }}</span></p>
                     </div>
                     <div class="info-card">
                         <h3>Proponent</h3>
-                        <p><span id="proponent-name"><?=$project['first_name']?>&nbsp;<?=$project['last_name']?></span>
+                        <p><span
+                                id="proponent-name">{{ $project['first_name'] }}&nbsp;{{ $project['last_name'] }}</span>
                         </p>
                     </div>
                 </div>
                 <div class="progress-container">
                     <div class="progress-header">
                         <h3>Overall Progress</h3>
-                        <span class="progress-percentage" id="progress-percentage"><?=$percentage?>%</span>
+                        <span class="progress-percentage" id="progress-percentage">{{ $percentage }}%</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" id="progress-bar" style="width: <?=$percentage?>%"></div>
+                        <div class="progress-fill" id="progress-bar" style="width: {{ $percentage }}%"></div>
                     </div>
                 </div>
 
@@ -217,310 +218,280 @@
                 <div class="rating-grid">
                     <div class="rating-card">
                         <h3>Accomplishment</h3>
-                        <div class="rating-value" id="accomplishment-rating"><?=number_format($totalStar,2)?></div>
+                        <div class="rating-value" id="accomplishment-rating">{{ number_format($totalStar,2) }}</div>
                         <div class="rating-stars">
-                            <?php
-                            $fullStars = floor($totalStar);               // Number of full stars
-                            $halfStar = ($totalStar - $fullStars) >= 0.5; // Whether to show a half star
-                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Remaining empty stars
-                            // Full stars
-                            for ($i = 0; $i < $fullStars; $i++) {
-                                echo '<i class="star fas fa-star filled"></i>';
-                            }
-                            // Half star
-                            if ($halfStar) {
-                                echo '<i class="star fas fa-star-half-alt filled"></i>';
-                            }
-                            // Empty stars
-                            for ($i = 0; $i < $emptyStars; $i++) {
-                                echo '<i class="star far fa-star"></i>';
-                            }
-                            ?>
-                        </div>
-                        <p id="deliverables-status">Based on <?=$complete?>/<?=$total?> deliverables</p>
-                    </div>
-
-                    <div class="rating-card">
-                        <h3>BUR (Budget Utilization)</h3>
-                        <div class="rating-value" id="bur-rating"><?=number_format($burStar,2)?></div>
-                        <div class="rating-stars">
-                            <?php
-                            $fullStars = floor($burStar);               // Number of full stars
-                            $halfStar = ($totalStar - $fullStars) >= 0.5; // Whether to show a half star
-                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Remaining empty stars
-                            // Full stars
-                            for ($i = 0; $i < $fullStars; $i++) {
-                                echo '<i class="star fas fa-star filled"></i>';
-                            }
-                            // Half star
-                            if ($halfStar) {
-                                echo '<i class="star fas fa-star-half-alt filled"></i>';
-                            }
-                            // Empty stars
-                            for ($i = 0; $i < $emptyStars; $i++) {
-                                echo '<i class="star far fa-star"></i>';
-                            }
-                            ?>
-                        </div>
-                        <p id="bur-status"><?=$bur?>% of budget utilized</p>
-                    </div>
-
-                    <div class="rating-card">
-                        <h3>Timeliness</h3>
-                        <div class="rating-value" id="timeliness-rating"><?=number_format($timeStar,2)?></div>
-                        <div class="rating-stars">
-                            <?php
-                        $fullStars = floor($timeStar);               // Number of full stars
-                        $halfStar = 0; // Whether to show a half star
-                        $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Remaining empty stars
-                        // Full stars
-                        for ($i = 0; $i < $fullStars; $i++) {
-                            echo '<i class="star fas fa-star filled"></i>';
-                        }
-                        // // Empty stars
-                        for ($i = 0; $i < $emptyStars; $i++) {
-                            echo '<i class="star far fa-star"></i>';
-                        }
-                        ?>
-                        </div>
-                        <p id="timeliness-status">
                             @php
-                            if(empty($completeDays)){ echo 'None';}
-                            else
-                            {
-                            if($numDays<0){echo abs($numDays).' days ahead of schedule';} else
-                                if($numDays==0){echo 'On time schedule' ;} else if($numDays>0){echo 'Late by
-                                '.$numDays.' days';}
-                                }
-                                @endphp
-                    </div>
+                            $fullStars = floor($totalStar);
+                            $halfStar = ($totalStar - $fullStars) >= 0.5;
+                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                            for ($i = 0; $i < $fullStars; $i++) { echo '<i class="star fas fa-star filled"></i>' ; } if
+                                ($halfStar) { echo '<i class="star fas fa-star-half-alt filled"></i>' ; } for ($i=0; $i
+                                < $emptyStars; $i++) { echo '<i class="star far fa-star"></i>' ; } @endphp </div>
+                                <p id="deliverables-status">Based on {{ $complete }}/{{ $total }} deliverables</p>
+                        </div>
 
-                    <div class="rating-card">
-                        <h3>Overall Rating</h3>
-                        <div class="rating-value" id="overall-rating"><?=number_format($overAll,2)?></div>
-                        <div class="rating-stars">
-                            <?php
-                            $fullStars = floor($overAll);               // Number of full stars
-                            $halfStar = ($totalStar - $fullStars) >= 0.5; // Whether to show a half star
-                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Remaining empty stars
-                            // Full stars
-                            for ($i = 0; $i < $fullStars; $i++) {
-                                echo '<i class="star fas fa-star filled"></i>';
-                            }
-                            // Half star
-                            if ($halfStar) {
-                                echo '<i class="star fas fa-star-half-alt filled"></i>';
-                            }
-                            // Empty stars
-                            for ($i = 0; $i < $emptyStars; $i++) {
-                                echo '<i class="star far fa-star"></i>';
-                            }
-                            ?>
-                        </div>
-                        <p>
-                            <?php
-                            if ($overAll >= 4.5) echo 'Activity Health: Excellent';
-                            else if ($overAll >= 4) echo 'Activity Health: Very Good';
-                            else if ($overAll >= 3.5) echo'Activity Health: Good';
-                            else if ($overAll >= 3) echo 'Activity Health: Fair';
-                            else if($overAll >=1) echo 'Activity Health: Needs Attention';
-                            else if($overAll==0) echo 'Activity Health: None';
-                            ?>
-                        </p>
-                    </div>
-                </div>
+                        <div class="rating-card">
+                            <h3>BUR (Budget Utilization)</h3>
+                            <div class="rating-value" id="bur-rating">{{ number_format($burStar,2) }}</div>
+                            <div class="rating-stars">
+                                @php
+                                $fullStars = floor($burStar);
+                                $halfStar = ($totalStar - $fullStars) >= 0.5;
+                                $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
 
-                <div class="budget-section">
-                    <div class="section-title">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <h2>Budget Overview</h2>
+                                for ($i = 0; $i < $fullStars; $i++) { echo '<i class="star fas fa-star filled"></i>' ; }
+                                    if ($halfStar) { echo '<i class="star fas fa-star-half-alt filled"></i>' ; } for
+                                    ($i=0; $i < $emptyStars; $i++) { echo '<i class="star far fa-star"></i>' ; } @endphp
+                                    </div>
+                                    <p id="bur-status">{{ number_format($bur,2) }}% of budget utilized</p>
+                            </div>
+
+                            <div class="rating-card">
+                                <h3>Timeliness</h3>
+                                <div class="rating-value" id="timeliness-rating">{{ number_format($timeStar,2) }}</div>
+                                <div class="rating-stars">
+                                    @php
+                                    $fullStars = floor($timeStar);
+                                    $halfStar = 0;
+                                    $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                    for ($i = 0; $i < $fullStars; $i++) { echo '<i class="star fas fa-star filled"></i>'
+                                        ; } for ($i=0; $i < $emptyStars; $i++) { echo '<i class="star far fa-star"></i>'
+                                        ; } @endphp </div>
+                                        <p id="timeliness-status">
+                                            @php
+                                            if(empty($completeDays)){ echo 'None';}
+                                            else
+                                            {
+                                            if($numDays<0){echo abs($numDays).' days ahead of schedule';} else
+                                                if($numDays==0){echo 'On time schedule' ;} else if($numDays>0){echo
+                                                'Late by
+                                                '.$numDays.' days';}
+                                                }
+                                                @endphp
+                                </div>
+
+                                <div class="rating-card">
+                                    <h3>Overall Rating</h3>
+                                    <div class="rating-value" id="overall-rating">{{ number_format($overAll,2) }}</div>
+                                    <div class="rating-stars">
+                                        @php
+                                        $fullStars = floor($overAll); // Number of full stars
+                                        $halfStar = ($totalStar - $fullStars) >= 0.5; // Whether to show a half star
+                                        $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0); // Remaining empty stars
+                                        for ($i = 0; $i < $fullStars; $i++) {
+                                            echo '<i class="star fas fa-star filled"></i>' ; } if ($halfStar) {
+                                            echo '<i class="star fas fa-star-half-alt filled"></i>' ; } for ($i=0; $i <
+                                            $emptyStars; $i++) { echo '<i class="star far fa-star"></i>' ; } @endphp
+                                            </div>
+                                            <p>
+                                                @php
+                                                if($overAll >= 4.5) echo 'Activity Health: Excellent';
+                                                else if($overAll >= 4) echo 'Activity Health: Very Good';
+                                                else if($overAll >= 3.5) echo'Activity Health: Good';
+                                                else if($overAll >= 3) echo 'Activity Health: Fair';
+                                                else if($overAll >=1) echo 'Activity Health: Needs Attention';
+                                                else if($overAll==0) echo 'Activity Health: None';
+                                                @endphp
+                                            </p>
+                                    </div>
+                                </div>
+
+                                <div class="budget-section">
+                                    <div class="section-title">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        <h2>Budget Overview</h2>
+                                    </div>
+                                    <div class="budget-grid">
+                                        <div class="budget-card">
+                                            <h3>Allocated</h3>
+                                            <p id="budget-allocated">₱{{ number_format($project['budget_amount'],2) }}
+                                            </p>
+                                        </div>
+                                        <div class="budget-card">
+                                            <h3>Utilized</h3>
+                                            <p class="utilization" id="budget-utilized">
+                                                ₱{{ number_format($project['amount_spent'],2) }}
+                                            </p>
+                                        </div>
+                                        <div class="budget-card">
+                                            <h3>Remaining</h3>
+                                            <p class="remaining" id="budget-remaining">
+                                                ₱{{ number_format($project['budget_amount']-$project['amount_spent'],2) }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="budget-card" style="margin-top: 20px;">
+                                        <h3>BUR (Budget Utilization Rate)</h3>
+                                        <p class="bur" id="bur-percentage">
+                                            {{ number_format($bur,2) }}%
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="budget-grid">
-                        <div class="budget-card">
-                            <h3>Allocated</h3>
-                            <p id="budget-allocated">₱<?=number_format($project['budget_amount'],2)?></p>
-                        </div>
-                        <div class="budget-card">
-                            <h3>Utilized</h3>
-                            <p class="utilization" id="budget-utilized">₱<?=number_format($project['amount_spent'],2)?>
-                            </p>
-                        </div>
-                        <div class="budget-card">
-                            <h3>Remaining</h3>
-                            <p class="remaining" id="budget-remaining">
-                                ₱<?=number_format($project['budget_amount']-$project['amount_spent'],2)?></p>
+                    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="exampleModalLabel">Project Deliverables</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="row g-3" method="POST" id="form">
+                                        @csrf
+                                        <input type="hidden" name="project" value="{{ $id }}">
+                                        <div class="col-lg-12">
+                                            <textarea name="task" placeholder="Enter here"></textarea>
+                                            <div id="task-error" class="error-message text-danger text-sm"></div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-floppy-disk"></i>&nbsp;Save
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="budget-card" style="margin-top: 20px;">
-                        <h3>BUR (Budget Utilization Rate)</h3>
-                        <p class="bur" id="bur-percentage">
-                            <?=$bur?>%
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">Project Deliverables</h3>
-                </div>
-                <div class="modal-body">
-                    <form class="row g-3" method="POST" id="form">
-                        @csrf
-                        <input type="hidden" name="project" value="<?=$id?>">
-                        <div class="col-lg-12">
-                            <textarea name="task" placeholder="Enter here"></textarea>
-                            <div id="task-error" class="error-message text-danger text-sm"></div>
-                        </div>
-                        <div class="col-lg-12">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-floppy-disk"></i>&nbsp;Save
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- JavaScript for interactivity -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-    // Initialize the app
-    setTimeout(function() {
-        const alerts = document.getElementsByClassName('alert');
-        for (let i = 0; i < alerts.length; i++) {
-            alerts[i].style.display = 'none';
-        }
-    }, 3000);
-    $(document).on('click', '.delete', function() {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to delete this activity?",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Continue',
-            cancelButtonText: 'No, cancel!',
-        }).then((result) => {
-            // Action based on user's choice
-            if (result.isConfirmed) {
-                let val = $(this).val();
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    url: "{{ route('delete-project') }}",
-                    method: "POST",
-                    data: {
-                        value: val
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            Swal.fire({
-                                title: 'Great!',
-                                text: "Successfully removed",
-                                icon: 'success',
-                                confirmButtonText: 'Continue'
-                            }).then((result) => {
-                                // Action based on user's choice
-                                if (result.isConfirmed) {
-                                    location.href = "/";
-                                }
-                            });
-                        } else {
-                            var errors = response.error;
-                            swal.fire({
-                                title: 'Warning',
-                                text: errors.message,
-                                icon: 'warning'
-                            });
+                    <!-- JavaScript for interactivity -->
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                    // Initialize the app
+                    setTimeout(function() {
+                        const alerts = document.getElementsByClassName('alert');
+                        for (let i = 0; i < alerts.length; i++) {
+                            alerts[i].style.display = 'none';
                         }
-                    }
-                });
-            }
-        });
-    });
-    $(document).ready(function() {
-        $("#btnModal").click(function() {
-            $("#addModal").modal('show');
-        });
-    });
-    $('#form').on('submit', function(e) {
-        e.preventDefault();
-        $('.error-message').html('');
-        let data = $(this).serialize();
-        $.ajax({
-            url: "{{ route('save') }}",
-            method: "POST",
-            data: new FormData(this),
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(response) {
-                if (response.success) {
-                    $('#form')[0].reset();
-                    Swal.fire({
-                        title: 'Great!',
-                        text: "Successfully added",
-                        icon: 'success',
-                        confirmButtonText: 'Continue'
-                    }).then((result) => {
-                        // Action based on user's choice
-                        if (result.isConfirmed) {
-                            // Perform some action when "Yes" is clicked
-                            location.reload();
-                        }
+                    }, 3000);
+                    $(document).on('click', '.delete', function() {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "Do you want to delete this activity?",
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonText: 'Continue',
+                            cancelButtonText: 'No, cancel!',
+                        }).then((result) => {
+                            // Action based on user's choice
+                            if (result.isConfirmed) {
+                                let val = $(this).val();
+                                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                                $.ajax({
+                                    url: "{{ route('delete-project') }}",
+                                    method: "POST",
+                                    data: {
+                                        value: val
+                                    },
+                                    headers: {
+                                        'X-CSRF-TOKEN': csrfToken
+                                    },
+                                    success: function(response) {
+                                        if (response.success) {
+                                            Swal.fire({
+                                                title: 'Great!',
+                                                text: "Successfully removed",
+                                                icon: 'success',
+                                                confirmButtonText: 'Continue'
+                                            }).then((result) => {
+                                                // Action based on user's choice
+                                                if (result.isConfirmed) {
+                                                    location.href = "/";
+                                                }
+                                            });
+                                        } else {
+                                            var errors = response.error;
+                                            swal.fire({
+                                                title: 'Warning',
+                                                text: errors.message,
+                                                icon: 'warning'
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        });
                     });
-                } else {
-                    var errors = response.errors;
-                    //Iterate over each error and display it under the corresponding input field
-                    for (var field in errors) {
-                        $('#' + field + '-error').html('<p>' + errors[field] +
-                            '</p>'); // Show the first error message
-                        $('#' + field).addClass(
-                            'text-danger'); // Highlight the input field with an error
-                    }
-                }
-            }
-        });
-    });
+                    $(document).ready(function() {
+                        $("#btnModal").click(function() {
+                            $("#addModal").modal('show');
+                        });
+                    });
+                    $('#form').on('submit', function(e) {
+                        e.preventDefault();
+                        $('.error-message').html('');
+                        let data = $(this).serialize();
+                        $.ajax({
+                            url: "{{ route('save') }}",
+                            method: "POST",
+                            data: new FormData(this),
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function(response) {
+                                if (response.success) {
+                                    $('#form')[0].reset();
+                                    Swal.fire({
+                                        title: 'Great!',
+                                        text: "Successfully added",
+                                        icon: 'success',
+                                        confirmButtonText: 'Continue'
+                                    }).then((result) => {
+                                        // Action based on user's choice
+                                        if (result.isConfirmed) {
+                                            // Perform some action when "Yes" is clicked
+                                            location.reload();
+                                        }
+                                    });
+                                } else {
+                                    var errors = response.errors;
+                                    //Iterate over each error and display it under the corresponding input field
+                                    for (var field in errors) {
+                                        $('#' + field + '-error').html('<p>' + errors[field] +
+                                            '</p>'); // Show the first error message
+                                        $('#' + field).addClass(
+                                            'text-danger'
+                                        ); // Highlight the input field with an error
+                                    }
+                                }
+                            }
+                        });
+                    });
 
-    document.querySelectorAll('.step-checkbox').forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            const activityId = this.getAttribute('data-id');
-            const newStatus = this.checked ? 1 : 0;
+                    document.querySelectorAll('.step-checkbox').forEach(function(checkbox) {
+                        checkbox.addEventListener('change', function() {
+                            const activityId = this.getAttribute('data-id');
+                            const newStatus = this.checked ? 1 : 0;
 
-            fetch('/update-status', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                            .getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        activity_id: activityId,
-                        status: newStatus
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    //console.log('Status updated:', data);
-                    if (data.success) {
-                        location.reload();
-                    } else {
-                        alert(data.error);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error updating status:', error);
-                });
-        });
-    });
-    </script>
+                            fetch('/update-status', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': document.querySelector(
+                                                'meta[name="csrf-token"]')
+                                            .getAttribute('content')
+                                    },
+                                    body: JSON.stringify({
+                                        activity_id: activityId,
+                                        status: newStatus
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    //console.log('Status updated:', data);
+                                    if (data.success) {
+                                        location.reload();
+                                    } else {
+                                        alert(data.error);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error updating status:', error);
+                                });
+                        });
+                    });
+                    </script>
 
 </body>
 
