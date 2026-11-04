@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,'home'])->name('/');
 Route::get('/details/{id}',[HomeController::class,'activityDetails'])->name('details');
+Route::get('/calendar-events',[HomeController::class,'calendarEvents'])->name('calendar-events');
 Route::get('/logout',[HomeController::class,'logout'])->name('logout');
 Route::post('/save-project',[HomeController::class,'saveProject'])->name('save-project');
 Route::post('/edit-project',[HomeController::class,'editProject'])->name('edit-project');

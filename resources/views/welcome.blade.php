@@ -14,7 +14,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="assets/images/deped-gentri-logo.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v={{ filemtime(public_path('assets/css/styles.css')) }}">
 </head>
 
 <body>
@@ -47,6 +47,7 @@
             <div class="tab active" data-target="program-view">Program Dashboard</div>
             <div class="tab" data-target="projects-view">Projects Dashboard</div>
             <div class="tab" data-target="consolidated-view">Consolidated Report</div>
+            <div class="tab" data-target="calendar-view">Calendar</div>
             @if(!empty(session()->get('user')))
             <div class="tab" data-target="create-view">Create Project</div>
             @endif
@@ -1012,6 +1013,52 @@
 
             </div>
         </div>
+        
+        <!-- Calendar View -->
+        <div id="calendar-view" class="tab-content">
+            <div class="section-title">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Project Calendar</h2>
+            </div>
+            <div class="calendar-legend">
+                <span><i class="fas fa-bullseye"></i> Target date of implementation</span>
+            </div>
+            <div id="big-calendar"></div>
+        </div>
+
+        <!-- Calendar Event Modal -->
+        <div id="calendar-modal" class="calendar-modal" aria-hidden="true">
+            <div class="calendar-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cm-title">
+                <div class="calendar-modal-header">
+                    <h3 id="cm-title"></h3>
+                    <button type="button" class="calendar-modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="calendar-modal-body">
+                    <span id="cm-category" class="calendar-modal-badge"></span>
+                    <div class="calendar-modal-row">
+                        <label><i class="fas fa-align-left"></i> Description</label>
+                        <p id="cm-description"></p>
+                    </div>
+                    <div class="calendar-modal-row">
+                        <label><i class="fas fa-money-bill-wave"></i> Amount Allocated</label>
+                        <p id="cm-budget"></p>
+                    </div>
+                    <div class="calendar-modal-row">
+                        <label><i class="fas fa-bullseye"></i> Target Date of Implementation</label>
+                        <p id="cm-target"></p>
+                    </div>
+                    <div class="calendar-modal-row">
+                        <label><i class="fas fa-user"></i> Proponent</label>
+                        <p id="cm-proponent"></p>
+                    </div>
+                </div>
+                <div class="calendar-modal-footer">
+                    <a id="cm-details" href="#" class="btn btn-primary" style="text-decoration: none;">
+                        <i class="fas fa-eye"></i> View Details
+                    </a>
+                </div>
+            </div>
+        </div>
 
         <div class="instructions">
             <h2><i class="fas fa-info-circle"></i> How to Use This System</h2>
@@ -1022,6 +1069,9 @@
                 <li><strong>Activity Details:</strong> Track progress of specific activities with sequential
                     deliverables</li>
                 <li><strong>Consolidated Report:</strong> View program-wide progress and performance metrics</li>
+                <li><strong>Calendar:</strong> See every project's target, conducted and completed dates in a
+                    month, week or list view. Colors follow the project category; click an entry to open its
+                    details</li>
                 <li><strong>Create Project:</strong> Add new activities to the system</li>
                 <li><strong>Export Data:</strong> Download project data in CSV format</li>
                 <li><strong>Offline Capability:</strong> Works without internet connection</li>
@@ -1032,7 +1082,96 @@
 
     <!-- JavaScript for interactivity -->
     <script src="assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <script>
+    // Big calendar (rendered on first open, since it can't size itself while the tab is hidden)
+    const categoryColors = {
+        'I-CARE': '#3498db',
+        'SINULID': '#9b59b6',
+        'SAGIP': '#e74c3c',
+        'LINGAP': '#e67e22',
+        'ISSHED': '#16a085',
+        'UX': '#2c3e50',
+        'GENTRI SALIKSIK': '#27ae60',
+        'OK SA DEPED GENTRI': '#c0392b',
+        'SECURE-PUSO': '#8e44ad',
+        'DRRM-SAFE': '#d35400',
+        'HUMANE': '#2980b9',
+        'QMS/EOMS': '#7f8c8d'
+    };
+    let bigCalendar = null;
+    document.querySelector('.tab[data-target="calendar-view"]').addEventListener('click', function() {
+        // wait for the tab switch in script.js so the calendar is visible when measured
+        setTimeout(renderBigCalendar, 0);
+    });
+
+    function renderBigCalendar() {
+        if (bigCalendar) {
+            bigCalendar.updateSize();
+            return;
+        }
+        bigCalendar = new FullCalendar.Calendar(document.getElementById('big-calendar'), {
+            initialView: 'dayGridMonth',
+            height: 'auto',
+            dayMaxEvents: 3,
+            eventDisplay: 'block',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'multiMonthYear,dayGridMonth,timeGridWeek,listMonth'
+            },
+            buttonText: { today: 'Today', year: 'Year', month: 'Month', week: 'Week', list: 'List' },
+            events: "{{ route('calendar-events', [], false) }}",
+            eventDataTransform: function(event) {
+                event.color = categoryColors[(event.extendedProps.category || '').toUpperCase()] || '#95a5a6';
+                return event;
+            },
+            eventDidMount: function(info) {
+                const props = info.event.extendedProps;
+                info.el.title = `${info.event.title}\n${props.category} · ${props.status}\nClick to view details`;
+            },
+            eventClick: function(info) {
+                info.jsEvent.preventDefault();
+                openCalendarModal(info.event);
+            }
+        });
+        bigCalendar.render();
+    }
+
+    // Calendar event modal
+    const calendarModal = document.getElementById('calendar-modal');
+
+    function openCalendarModal(event) {
+        const props = event.extendedProps;
+        const budget = Number(props.budget) || 0;
+        const target = props.targetDate ? new Date(props.targetDate + 'T00:00:00') : null;
+        document.getElementById('cm-title').textContent = event.title;
+        document.getElementById('cm-category').textContent = `${props.category} · ${props.status}`;
+        document.getElementById('cm-category').style.backgroundColor = event.backgroundColor;
+        document.getElementById('cm-description').textContent = props.description || 'No description';
+        document.getElementById('cm-budget').textContent = '₱' + budget.toLocaleString('en-PH', { minimumFractionDigits: 2 });
+        document.getElementById('cm-target').textContent = target && !isNaN(target)
+            ? target.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+            : 'Not set';
+        document.getElementById('cm-proponent').textContent = props.proponent || 'Not set';
+        document.getElementById('cm-details').href = props.detailsUrl;
+        calendarModal.classList.add('open');
+        calendarModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeCalendarModal() {
+        calendarModal.classList.remove('open');
+        calendarModal.setAttribute('aria-hidden', 'true');
+    }
+
+    calendarModal.querySelector('.calendar-modal-close').addEventListener('click', closeCalendarModal);
+    calendarModal.addEventListener('click', function(e) {
+        if (e.target === calendarModal) closeCalendarModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeCalendarModal();
+    });
+
     // Initialize the app
     setTimeout(function() {
         const alerts = document.getElementsByClassName('alert');

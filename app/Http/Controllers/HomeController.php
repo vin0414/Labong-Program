@@ -177,7 +177,7 @@ class HomeController extends Controller
         $activityOkDepEdDone = $model->where('category','OK sa DepEd Gentri')
                                     ->where('status',1)
                                     ->count();
-        $activityOkDepEdtotal = $model->where('category','Ok sa DepEd Gentri')
+        $activityOkDepEdtotal = $model->where('category','OK sa DepEd Gentri')
                                     ->count();
         $totalPercentageOkDepEd = $activityOkDepEdtotal > 0 ? ($activityOkDepEdDone/$activityOkDepEdtotal)* 100 : 0;
         //total
@@ -376,16 +376,16 @@ class HomeController extends Controller
         if ($project) {
             // Update the record with validated data
             $project->update([
-                'activity_title' => $validatedData['activity-title'],
-                'project_category' => $validatedData['project-category'],
+                'name' => $validatedData['activity-title'],
+                'category' => $validatedData['project-category'],
                 'budget_source' => $validatedData['budget-source-create'],
-                'proponent_firstname' => $validatedData['proponent-firstname'],
-                'proponent_surname' => $validatedData['proponent-surname'],
-                'budget_allocated' => $validatedData['budget-allocated-create'],
+                'first_name' => $validatedData['proponent-firstname'],
+                'last_name' => $validatedData['proponent-surname'],
+                'budget_amount' => $validatedData['budget-allocated-create'],
                 'amount_spent' => $validatedData['amount_spent'],
                 'implementation_date' => $validatedData['target-date-create'],
                 'date_conducted' => $validatedData['date-conducted'],
-                'activity_description' => $validatedData['activity-description'],
+                'description' => $validatedData['activity-description'],
             ]);
 
             return redirect('/details/'.$validatedData['project_id'])->with('success','Great! Successfully applied changes');
@@ -598,6 +598,36 @@ class HomeController extends Controller
             $this->closeProject($activity->project_id);
         }
         return response()->json(['success' => true]);
+    }
+
+    //calendar events
+    public function calendarEvents()
+    {
+        $projectModel = new \App\Models\projectModel();
+        $projects = $projectModel->select('project_id','name','category','description','budget_amount','first_name','last_name','implementation_date','status')->get();
+        //one entry per project, placed on its target date
+        $events = [];
+        foreach ($projects as $project) {
+            $date = $project['implementation_date'];
+            if (empty($date) || str_starts_with($date, '0000')) {
+                continue;
+            }
+            $events[] = [
+                'title' => $project['name'],
+                'start' => Carbon::parse($date)->toDateString(),
+                'allDay' => true,
+                'extendedProps' => [
+                    'category' => $project['category'],
+                    'status' => $project['status'] == 1 ? 'Completed' : 'Ongoing',
+                    'description' => $project['description'],
+                    'budget' => $project['budget_amount'],
+                    'targetDate' => $date,
+                    'proponent' => trim($project['first_name'].' '.$project['last_name']),
+                    'detailsUrl' => route('details', $project['project_id']),
+                ],
+            ];
+        }
+        return response()->json($events);
     }
 
     public function deleteProject(Request $request)
