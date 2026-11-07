@@ -99,9 +99,9 @@
                             <h4><i class="fas fa-project-diagram"></i> Projects</h4>
                             <ul class="activity-list">
                                 <li>I-CARE<span
-                                        class="activity-progress"><?=number_format($ICarePercentage,2) ?>%</span></li>
+                                        class="activity-progress">{{ number_format($ICarePercentage,2) }}%</span></li>
                                 <li>SINULID<span
-                                        class="activity-progress"><?=number_format($SinulidPercentage,2) ?>%</span></li>
+                                        class="activity-progress">{{ number_format($SinulidPercentage,2) }}%</span></li>
                             </ul>
                         </div>
                     </div>
@@ -136,10 +136,10 @@
                         <div class="projects-section">
                             <h4><i class="fas fa-project-diagram"></i> Projects</h4>
                             <ul class="activity-list">
-                                <li>SAGIP<span class="activity-progress"><?=number_format($SagipPercentage,2) ?>%</span>
+                                <li>SAGIP<span class="activity-progress">{{ number_format($SagipPercentage,2) }}%</span>
                                 </li>
                                 <li>LINGAP<span
-                                        class="activity-progress"><?=number_format($LingapPercentage,2) ?>%</span></li>
+                                        class="activity-progress">{{ number_format($LingapPercentage,2) }}%</span></li>
                             </ul>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                             <h4><i class="fas fa-project-diagram"></i> Projects</h4>
                             <ul class="activity-list">
                                 <li>ISSHED<span
-                                        class="activity-progress"><?=number_format($IsshedPercentage,2) ?>%</span></li>
+                                        class="activity-progress">{{ number_format($IsshedPercentage,2) }}%</span></li>
                             </ul>
                         </div>
                     </div>
@@ -208,13 +208,13 @@
                             <h4><i class="fas fa-project-diagram"></i> Projects</h4>
                             <ul class="activity-list">
                                 <li>UX
-                                    <span class="activity-progress"><?=number_format($UxPercentage,2) ?>%</span>
+                                    <span class="activity-progress">{{ number_format($UxPercentage,2) }}%</span>
                                 </li>
                                 <li>Gentri SALIKSIK
-                                    <span class="activity-progress"><?=number_format($GentriPercentage,2) ?>%</span>
+                                    <span class="activity-progress">{{ number_format($GentriPercentage,2) }}%</span>
                                 </li>
                                 <li>QMS/EOMS
-                                    <span class="activity-progress"><?=number_format($QMSPercentage,2) ?>%</span>
+                                    <span class="activity-progress">{{ number_format($QMSPercentage,2) }}%</span>
                                 </li>
                             </ul>
                         </div>
@@ -255,13 +255,13 @@
                             <h4><i class="fas fa-project-diagram"></i> Projects</h4>
                             <ul class="activity-list">
                                 <li>OK sa DepEd Gentri
-                                    <span class="activity-progress"><?=number_format($OkDepEdPercentage,2) ?>%</span>
+                                    <span class="activity-progress">{{ number_format($OkDepEdPercentage,2) }}%</span>
                                 </li>
                                 <li>SECURE-PUSO
-                                    <span class="activity-progress"><?=number_format($SecurePercentage,2) ?>%</span>
+                                    <span class="activity-progress">{{ number_format($SecurePercentage,2) }}%</span>
                                 </li>
                                 <li>DRRM-SAFE
-                                    <span class="activity-progress"><?=number_format($DRRMPercentage,2) ?>%</span>
+                                    <span class="activity-progress">{{ number_format($DRRMPercentage,2) }}%</span>
                                 </li>
                             </ul>
                         </div>
@@ -294,7 +294,7 @@
                             <h4><i class="fas fa-project-diagram"></i> Projects</h4>
                             <ul class="activity-list">
                                 <li>HUMANE
-                                    <span class="activity-progress"><?=number_format($HumanePercentage,2) ?>%</span>
+                                    <span class="activity-progress">{{ number_format($HumanePercentage,2) }}%</span>
                                 </li>
                             </ul>
                         </div>
@@ -319,17 +319,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalICare ?> Activities</span>
-                            <span>Overall Progress: <?=number_format($ICarePercentage,2) ?>%</span>
+                            <span>{{ $totalICare }} Activities</span>
+                            <span>Overall Progress: {{ number_format($ICarePercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listICare as $activity): ?>
+                            @foreach($listICare as $activity)
                             <li data-project="icare">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -342,17 +342,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalSinulid?> Activities</span>
-                            <span>Overall Progress: <?=number_format($SinulidPercentage,2)?>%</span>
+                            <span>{{ $totalSinulid }} Activities</span>
+                            <span>Overall Progress: {{ number_format($SinulidPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listSinulid as $activity): ?>
+                            @foreach($listSinulid as $activity)
                             <li data-project="sinulid">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -365,17 +365,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalSagip?> Activities</span>
-                            <span>Overall Progress: <?=number_format($SagipPercentage,2)?>%</span>
+                            <span>{{ $totalSagip }} Activities</span>
+                            <span>Overall Progress: {{ number_format($SagipPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listSagip as $activity): ?>
+                            @foreach($listSagip as $activity)
                             <li data-project="sagip">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -388,17 +388,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalLingap?> Activities</span>
-                            <span>Overall Progress: <?=number_format($LingapPercentage,2)?>%</span>
+                            <span>{{ $totalLingap }} Activities</span>
+                            <span>Overall Progress: {{ number_format($LingapPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listLingap as $activity): ?>
+                            @foreach($listLingap as $activity)
                             <li data-project="lingap">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -412,17 +412,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalIsshed?> Activities</span>
-                            <span>Overall Progress: <?=number_format($IsshedPercentage,2)?>%</span>
+                            <span>{{ $totalIsshed }} Activities</span>
+                            <span>Overall Progress: {{ number_format($IsshedPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listIsshed as $activity): ?>
+                            @foreach($listIsshed as $activity)
                             <li data-project="isshed">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -435,17 +435,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalUX?> Activities</span>
-                            <span>Overall Progress: <?=number_format($UxPercentage,2)?>%</span>
+                            <span>{{ $totalUX }} Activities</span>
+                            <span>Overall Progress: {{ number_format($UxPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listUX as $activity): ?>
+                            @foreach($listUX as $activity)
                             <li data-project="ux">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -458,17 +458,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalGentri?> Activities</span>
-                            <span>Overall Progress: <?=number_format($GentriPercentage,2)?>%</span>
+                            <span>{{ $totalGentri }} Activities</span>
+                            <span>Overall Progress: {{ number_format($GentriPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listGentri as $activity): ?>
+                            @foreach($listGentri as $activity)
                             <li data-project="gentri">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -481,17 +481,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalOkDepEd?> Activities</span>
-                            <span>Overall Progress: <?=number_format($OkDepEdPercentage,2)?>%</span>
+                            <span>{{ $totalOkDepEd }} Activities</span>
+                            <span>Overall Progress: {{ number_format($OkDepEdPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listOkDepEd as $activity): ?>
+                            @foreach($listOkDepEd as $activity)
                             <li data-project="OkDepEd">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -505,17 +505,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalSecurePuso?> Activities</span>
-                            <span>Overall Progress: <?=number_format($SecurePercentage,2)?>%</span>
+                            <span>{{ $totalSecurePuso }} Activities</span>
+                            <span>Overall Progress: {{ number_format($SecurePercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listSecurePuso as $activity): ?>
+                            @foreach($listSecurePuso as $activity)
                             <li data-project="secure-puso">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -529,17 +529,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalDRRM?> Activities</span>
-                            <span>Overall Progress: <?=number_format($DRRMPercentage,2)?>%</span>
+                            <span>{{ $totalDRRM }} Activities</span>
+                            <span>Overall Progress: {{ number_format($DRRMPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listDRRM as $activity): ?>
+                            @foreach($listDRRM as $activity)
                             <li data-project="drrm-safe">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -553,17 +553,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalHumane?> Activities</span>
-                            <span>Overall Progress: <?=number_format($HumanePercentage,2)?>%</span>
+                            <span>{{ $totalHumane }} Activities</span>
+                            <span>Overall Progress: {{ number_format($HumanePercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listHumane as $activity): ?>
+                            @foreach($listHumane as $activity)
                             <li data-project="humane">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -576,17 +576,17 @@
                     </div>
                     <div class="project-body">
                         <div class="project-meta">
-                            <span><?=$totalQMS?> Activities</span>
-                            <span>Overall Progress: <?=number_format($QMSPercentage,2)?>%</span>
+                            <span>{{ $totalQMS }} Activities</span>
+                            <span>Overall Progress: {{ number_format($QMSPercentage,2) }}%</span>
                         </div>
                         <ul class="activity-list activityShort element">
-                            <?php foreach($listQMS as $activity): ?>
+                            @foreach($listQMS as $activity)
                             <li data-project="qms-eoms">
                                 <a href="{{ route('details',['id'=>$activity->project_id]) }}"
-                                    class="no-line"><?=$activity->name?></a><span
-                                    class="activity-progress"><?=$activity->percentage?>%</span>
+                                    class="no-line">{{ $activity->name }}</a><span
+                                    class="activity-progress">{{ $activity->percentage }}%</span>
                             </li>
-                            <?php endforeach; ?>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -1013,7 +1013,7 @@
 
             </div>
         </div>
-        
+
         <!-- Calendar View -->
         <div id="calendar-view" class="tab-content">
             <div class="section-title">
@@ -1120,15 +1120,23 @@
                 center: 'title',
                 right: 'multiMonthYear,dayGridMonth,timeGridWeek,listMonth'
             },
-            buttonText: { today: 'Today', year: 'Year', month: 'Month', week: 'Week', list: 'List' },
+            buttonText: {
+                today: 'Today',
+                year: 'Year',
+                month: 'Month',
+                week: 'Week',
+                list: 'List'
+            },
             events: "{{ route('calendar-events', [], false) }}",
             eventDataTransform: function(event) {
-                event.color = categoryColors[(event.extendedProps.category || '').toUpperCase()] || '#95a5a6';
+                event.color = categoryColors[(event.extendedProps.category || '').toUpperCase()] ||
+                    '#95a5a6';
                 return event;
             },
             eventDidMount: function(info) {
                 const props = info.event.extendedProps;
-                info.el.title = `${info.event.title}\n${props.category} · ${props.status}\nClick to view details`;
+                info.el.title =
+                    `${info.event.title}\n${props.category} · ${props.status}\nClick to view details`;
             },
             eventClick: function(info) {
                 info.jsEvent.preventDefault();
@@ -1149,10 +1157,16 @@
         document.getElementById('cm-category').textContent = `${props.category} · ${props.status}`;
         document.getElementById('cm-category').style.backgroundColor = event.backgroundColor;
         document.getElementById('cm-description').textContent = props.description || 'No description';
-        document.getElementById('cm-budget').textContent = '₱' + budget.toLocaleString('en-PH', { minimumFractionDigits: 2 });
-        document.getElementById('cm-target').textContent = target && !isNaN(target)
-            ? target.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-            : 'Not set';
+        document.getElementById('cm-budget').textContent = '₱' + budget.toLocaleString('en-PH', {
+            minimumFractionDigits: 2
+        });
+        document.getElementById('cm-target').textContent = target && !isNaN(target) ?
+            target.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }) :
+            'Not set';
         document.getElementById('cm-proponent').textContent = props.proponent || 'Not set';
         document.getElementById('cm-details').href = props.detailsUrl;
         calendarModal.classList.add('open');
