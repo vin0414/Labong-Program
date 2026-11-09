@@ -15,6 +15,70 @@
     <link href="assets/images/deped-gentri-logo.png" rel="shortcut icon" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/styles.css?v={{ filemtime(public_path('assets/css/styles.css')) }}">
+    <style>
+        /* Calendar event modal (inline so it works even if styles.css is stale on the server) */
+        .calendar-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .calendar-modal.open { display: flex; }
+        .calendar-modal-dialog {
+            background: white;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .calendar-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 18px 20px;
+            background: var(--primary, #2c3e50);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        .calendar-modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .calendar-modal-body { padding: 20px; }
+        .calendar-modal-badge {
+            display: inline-block;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+        .calendar-modal-row { margin-bottom: 14px; }
+        .calendar-modal-row label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark, #2c3e50);
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        .calendar-modal-row label i {
+            color: var(--secondary, #3498db);
+            width: 18px;
+        }
+        .calendar-modal-row p { color: #333; white-space: pre-line; }
+        .calendar-modal-footer { padding: 0 20px 20px; text-align: right; }
+    </style>
 </head>
 
 <body>
@@ -900,7 +964,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="activity-title">Activity Title</label>
-                        <input type="text" name="activity-title" value="{{ old('activity-title') }}"
+                        <input type="text" id="activity-title" name="activity-title" value="{{ old('activity-title') }}"
                             placeholder="Enter activity title" required />
                         @if($errors->has('activity-title'))
                         <span class="text-danger">{{ $errors->first('activity-title') }}</span>
@@ -910,7 +974,7 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="project-category">Under Which Project</label>
-                                <select name="project-category" required>
+                                <select id="project-category" name="project-category" required>
                                     <option value="">Select Project</option>
                                     <option {{old('project-category')=='I-CARE' ? 'selected': ''}}>I-CARE</option>
                                     <option {{old('project-category')=='SINULID' ? 'selected': ''}}>SINULID</option>
@@ -936,7 +1000,7 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="budget-source-create">Budget Source</label>
-                                <select name="budget-source-create" required>
+                                <select id="budget-source-create" name="budget-source-create" required>
                                     <option value="">Select Budget Source</option>
                                     <option {{old('budget-source-create')=='MOOE-GAS' ? 'selected': ''}}>MOOE-GAS
                                     </option>
@@ -958,7 +1022,7 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="proponent-firstname">Proponent First Name</label>
-                                <input type="text" name="proponent-firstname" value="{{ old('proponent-firstname') }}"
+                                <input type="text" id="proponent-firstname" name="proponent-firstname" value="{{ old('proponent-firstname') }}"
                                     placeholder="Enter first name" required />
                                 @if($errors->has('proponent-firstname'))
                                 <span class="text-danger">{{ $errors->first('proponent-firstname') }}</span>
@@ -968,7 +1032,7 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="proponent-surname">Proponent Surname</label>
-                                <input type="text" name="proponent-surname" value="{{ old('proponent-surname') }}"
+                                <input type="text" id="proponent-surname" name="proponent-surname" value="{{ old('proponent-surname') }}"
                                     placeholder="Enter surname" required />
                                 @if($errors->has('proponent-surname'))
                                 <span class="text-danger">{{ $errors->first('proponent-surname') }}</span>
@@ -980,7 +1044,7 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="budget-allocated-create">Budget Allocated (₱)</label>
-                                <input type="number" name="budget-allocated-create"
+                                <input type="number" id="budget-allocated-create" name="budget-allocated-create"
                                     value="{{ old('budget-allocated-create') }}" placeholder="Enter amount" required />
                                 @if($errors->has('budget-allocated-create'))
                                 <span class="text-danger">{{ $errors->first('budget-allocated-create') }}</span>
@@ -990,7 +1054,7 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="target-date-create">Target Date of Implementation</label>
-                                <input type="date" name="target-date-create" value="{{ old('target-date-create') }}"
+                                <input type="date" id="target-date-create" name="target-date-create" value="{{ old('target-date-create') }}"
                                     required />
                                 @if($errors->has('target-date-create'))
                                 <span class="text-danger">{{ $errors->first('target-date-create') }}</span>
@@ -1000,7 +1064,7 @@
                     </div>
                     <div class="form-group">
                         <label for="activity-description">Activity Description</label>
-                        <textarea name="activity-description" rows="4"
+                        <textarea id="activity-description" name="activity-description" rows="4"
                             placeholder="Describe the activity">{{old('activity-description')}}</textarea>
                         @if($errors->has('activity-description'))
                         <span class="text-danger">{{ $errors->first('activity-description') }}</span>

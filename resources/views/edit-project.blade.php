@@ -101,7 +101,7 @@
                         </div>
                         <div class="form-group">
                             <label for="activity-title">Activity Title</label>
-                            <input type="text" name="activity-title" value="{{ $project->name }}"
+                            <input type="text" id="activity-title" name="activity-title" value="{{ $project->name }}"
                                 placeholder="Enter activity title" required />
                             @if($errors->has('activity-title'))
                             <span class="text-danger">{{ $errors->first('activity-title') }}</span>
@@ -111,7 +111,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="project-category">Under Which Project</label>
-                                    <select name="project-category" required>
+                                    <select id="project-category" name="project-category" required>
                                         <option value="">Select Project</option>
                                         <option {{$project->category=='I-CARE' ? 'selected': ''}}>I-CARE
                                         </option>
@@ -140,7 +140,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="budget-source-create">Budget Source</label>
-                                    <select name="budget-source-create" required>
+                                    <select id="budget-source-create" name="budget-source-create" required>
                                         <option value="">Select Budget Source</option>
                                         <option {{$project->budget_source=='MOOE-GAS' ? 'selected': ''}}>MOOE-GAS
                                         </option>
@@ -163,7 +163,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="proponent-firstname">Proponent First Name</label>
-                                    <input type="text" name="proponent-firstname" value="{{ $project->first_name }}"
+                                    <input type="text" id="proponent-firstname" name="proponent-firstname" value="{{ $project->first_name }}"
                                         placeholder="Enter first name" required />
                                     @if($errors->has('proponent-firstname'))
                                     <span class="text-danger">{{ $errors->first('proponent-firstname') }}</span>
@@ -173,7 +173,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="proponent-surname">Proponent Surname</label>
-                                    <input type="text" name="proponent-surname" value="{{ $project->last_name }}"
+                                    <input type="text" id="proponent-surname" name="proponent-surname" value="{{ $project->last_name }}"
                                         placeholder="Enter surname" required />
                                     @if($errors->has('proponent-surname'))
                                     <span class="text-danger">{{ $errors->first('proponent-surname') }}</span>
@@ -185,7 +185,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="budget-allocated-create">Budget Allocated (₱)</label>
-                                    <input type="number" name="budget-allocated-create"
+                                    <input type="number" id="budget-allocated-create" name="budget-allocated-create"
                                         value="{{ $project->budget_amount }}" placeholder="Enter amount" required />
                                     @if($errors->has('budget-allocated-create'))
                                     <span class="text-danger">{{ $errors->first('budget-allocated-create') }}</span>
@@ -195,7 +195,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="amount_spent">Amount Utilized (₱)</label>
-                                    <input type="number" name="amount_spent" value="{{ $project->amount_spent }}"
+                                    <input type="number" id="amount_spent" name="amount_spent" value="{{ $project->amount_spent }}"
                                         placeholder="Enter amount" required />
                                     @if($errors->has('amount_spent'))
                                     <span class="text-danger">{{ $errors->first('amount_spent') }}</span>
@@ -205,7 +205,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="date-conducted">Date Conducted</label>
-                                    <input type="date" name="date-conducted" value="{{ $project->date_conducted }}"
+                                    <input type="date" id="date-conducted" name="date-conducted" value="{{ $project->date_conducted }}"
                                         required />
                                     @if($errors->has('date-conducted'))
                                     <span class="text-danger">{{ $errors->first('date-conducted') }}</span>
@@ -215,7 +215,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="target-date-create">Target Date</label>
-                                    <input type="date" name="target-date-create"
+                                    <input type="date" id="target-date-create" name="target-date-create"
                                         value="{{ $project->implementation_date }}" required />
                                     @if($errors->has('target-date-create'))
                                     <span class="text-danger">{{ $errors->first('target-date-create') }}</span>
@@ -225,7 +225,7 @@
                         </div>
                         <div class="form-group">
                             <label for="activity-description">Activity Description</label>
-                            <textarea name="activity-description" rows="4"
+                            <textarea id="activity-description" name="activity-description" rows="4"
                                 placeholder="Describe the activity">{{ $project->description }}</textarea>
                             @if($errors->has('activity-description'))
                             <span class="text-danger">{{ $errors->first('activity-description') }}</span>
